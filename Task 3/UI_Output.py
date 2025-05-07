@@ -10,8 +10,16 @@ class Ui_Output(object):
         self.appManager = None
 
     def abort(self):
+        """Close the window and stop any ongoing processing"""
+        # First close the window
         self.window.close()
-        self.appManager.abort()
+        
+        # Then check if appManager exists and call its abort method
+        if hasattr(self, 'appManager') and self.appManager is not None:
+            try:
+                self.appManager.abort()
+            except AttributeError:
+                print("Warning: appManager does not have an abort method")
 
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
